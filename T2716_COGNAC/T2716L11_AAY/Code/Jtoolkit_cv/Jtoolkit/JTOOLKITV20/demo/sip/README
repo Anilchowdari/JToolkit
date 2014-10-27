@@ -1,0 +1,211 @@
+sip/README
+----------
+
+This directory contains information about the Scalable IP(SIP) offering
+of NSJ. This file contains instructions on how to start the 
+configuration tool and provides sample input to the configuration tool.
+
+This directory contains a sample java client program (Client.java) and a sample java
+network server program (Server.java).  The network server program is used in many of
+the sample input examples.
+
+To execute the demo:
+
+1. Make a copy of this directory.
+2. Compile Server.java (javac Server.java).
+3. Compile Client.java (javac Client.java).
+4. Use the sipconf to configure the application.
+
+STARTING sipconf
+----------------
+Before starting sipconf, verify that /usr/tandem/javaextv20/bin(for TNS/R) or
+/usr/tandem/javaexth11/bin(for TNS/E) is in your PATH.
+
+The syntax for running sipconf is:
+
+sipconf -t \$<tcpip-transport-name> -p <port> -e <errlog> [-noa]
+
+where:
+	<tcpip-transport-name>
+	
+	is the name of the tcpip process; for example, $ZTC0 or $ZTC00.  This
+	defaults to $ZTC0.
+	
+	<port>
+	
+	is an unused port number.
+	
+	<errlog>
+	
+	is the absolute path(fully qualified file name) to a file 
+	where error messages from sipconf will be written.  If the
+	file does not exist, sipconf will create it.  You must have
+	write access to the directory where the file will be created.
+	
+	[-noa]
+	
+	indicates that no user authentication should be done.  If you
+	omit this parameter, users of sipconf will be required to enter
+	a user name and password whenever acessing sipconf through a 
+	browser.
+	
+example:
+
+	sipconf -t \$ZTC00 -p 9090 -e /tmp/myerr -noa
+
+
+USING sipconf
+-------------
+
+You access sipconf via a browser by entering:
+
+http://<address-of-system-where-sipconf-is-running>:<port>/
+
+where:
+	
+	<address-of-system-where-sipconf-is-running>
+	
+	is either a host name of the system where sipconf is running
+	or the dotted decimal address of the system where sipconf is
+	running.
+
+	<port> 
+	
+	is the port number you supplied when you started sipconf.
+	
+example:
+
+	http://mysys.mycomp.com:9090/
+	
+
+sipconf CONFIGURATION TOOL
+--------------------------
+
+The following paragraphs describe inputs to sipconf that
+can be used to create the demo application.  
+
+1. Access sipconf from the browser following the steps described above
+   under USING sipconf.
+
+2. Select Configuration Tool from the browser. 
+
+3. A window appears that describes the configuration tool. Read the
+   description.
+
+4. Click the Configure new application button.
+
+5. When the next screen appears, click the More Info buttons.
+
+
+	Sample Input
+	============
+
+	Configuration Dir: 	/h/mydir/myconfdir
+
+	Pathmon Name: 		$sip
+
+	Primary cpu: 		0
+
+	Backup cpu:		1
+
+	Guardian Volume/Subvolume: 	$system.myvol
+
+	Log File Directory:	/h/mydir/mylogdir
+
+	Number of sets of SIP Serverclasses:	1
+
+	Home Terminal(Optional): (leave this blank)
+
+6. Check the Configure and Start box.
+
+7. Press the Submit button.
+
+8. When the SIP serverclass screen appears, press the More Info buttons.
+
+	Sample Input
+	============
+	
+	JVM Location: 	(use the default value)
+
+	Transport name: (use PTCP/IP Process Name or TCP/IPv6 process Name)	
+	
+	User classpath:	/h/mydir/myconfdir
+
+	Specify the directory where the Server.class file exists; i.e. 
+	the directory where you made a copy of the demo.
+	
+	.class Name:	Server
+
+	Arglist:  9092
+	
+	Env Variables (Optional): (omit)
+
+	Omit this - the sample server requires no environmental variables.
+
+        ServerClass Cpus:       all
+
+	ServerClass Name Root:	MYSVC
+
+9. Check the configure and start box and then press the Submit button.
+
+10 A message should appear that says the application has been 
+    successfully configured.
+
+11 At this point, you can exit the browser.
+
+12.In the directory where you installed the demo, run the client 
+   by entering:
+
+   java Client <the ip address of your system> 9092 1
+
+  
+   The client will echo the message it is sending to the server and will also
+   echo the message returned from the server.
+
+   Sample Client Output
+   ====================
+
+	Connected to <ip-address>
+	Sending: Client <clientId> sends message 0
+	Returning line to client 0: Client <clientId> sends message 0
+	Sending: Client <clientId> sends message 1
+	Returning line to client 0: Client <clientId> sends message 1
+	....
+	The client will loop until it has sent 100 messages and then
+	display:
+	
+	Connection Closed
+
+
+STOPPING sipconf
+----------------
+
+After you are finished configuring your application, make a note of
+your configuration directory.  You can then stop sipconf.  To stop
+sipconf, do the following:
+
+Enter:
+
+	ps (this will give you a list of your running processes)
+
+Find:
+
+	sipconf (in the list of your processes).
+
+Enter:
+
+	kill -9 <pid of sipconf>
+
+
+                                 *  *  *
+ You are granted a limited copyright to modify and use this sample
+ code for your internal purposes only. THIS SOFTWARE IS PROVIDED "AS-
+ IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ PARTICULAR PURPOSE OR NONINFRINGEMENT. IN NO EVENT SHALL THE
+ HEWLETT-PACKARD COMPANY OR ITS SUBSIDIARIES BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE INCURRED BY YOU OR ANY THIRD PARTY IN CONNECTION WITH THE
+ USE OF THIS SOFTWARE.                                                         
+

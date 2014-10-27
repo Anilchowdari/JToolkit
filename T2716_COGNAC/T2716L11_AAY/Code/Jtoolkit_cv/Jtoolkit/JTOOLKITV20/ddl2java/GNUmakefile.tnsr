@@ -1,0 +1,107 @@
+#
+# Makefile for ddl2java
+#
+# (cross-compiler version)
+# 
+
+include ../Defs.gmk.tnsr
+
+# flags that are the same for debug and non-debug builds
+CFLAGS_COMMON += -Wnowarn=141,209 \
+	-Wfieldalign=shared2 -D_XOPEN_SOURCE_EXTENDED=1 
+CPP_FLAGS = $(CC_VERSION_FLAG) $(CC_FLAGS)
+CPP_DEBUG_FLAGS = $(CC_VERSION_FLAG) $(CC_DEBUG_FLAGS)
+# Strip symbols for non-debug builds
+INCLUDE_DIRS = -I./$(SRC)
+
+# The executable we're building
+PROGRAM = ddl2java
+
+##
+## Source and object directories
+## 
+SRC=src
+OBJ=obj
+
+# Used for debug builds
+SUFFIX= _g
+
+##
+## Source Files 
+##
+
+# Add C++ files to this list
+FILES.cpp = \
+	$(SRC)/classgen.cpp   \
+	$(SRC)/ddl2java.cpp   \
+	$(SRC)/ddlproc.cpp    \
+	$(SRC)/ddlread.cpp    \
+	$(SRC)/detailList.cpp \
+	$(SRC)/itemlist.cpp   \
+	$(SRC)/keysfile.cpp   \
+	$(SRC)/utils.cpp 
+
+
+# Add C files to this list
+FILES.c = 
+	
+
+# List of object files for optimized build
+FILES.o = $(FILES.c:$(SRC)/%.c=$(OBJ)/$(TNSR_DIR)/%.o)
+FILES.o += $(FILES.cpp:$(SRC)/%.cpp=$(OBJ)/$(TNSR_DIR)/%.o)
+# List of object files for debug build
+FILESD.o = $(FILES.c:$(SRC)/%.c=$(OBJ)$(SUFFIX)/$(TNSR_DIR)/%.o)
+FILESD.o += $(FILES.cpp:$(SRC)/%.cpp=$(OBJ)$(SUFFIX)/$(TNSR_DIR)/%.o)
+
+##
+## Rules
+##
+
+all: $(PROGRAM) $(PROGRAM)$(SUFFIX)
+
+clean :
+	rm -rf $(TNSR_DIR) $(OBJ)/$(TNSR_DIR) $(OBJ)$(SUFFIX)/$(TNSR_DIR)
+
+## ------------------------------------------------------
+## --- Should be no need to modify from this point on ---
+## ------------------------------------------------------
+
+##
+## Rules for building executable
+##
+
+$(OBJ):
+	mkdir -p $@
+
+$(OBJ)/$(TNSR_DIR): $(OBJ)
+	mkdir -p $@
+
+$(OBJ)$(SUFFIX):
+	mkdir -p $@
+
+$(OBJ)$(SUFFIX)/$(TNSR_DIR): $(OBJ)$(SUFFIX)
+	mkdir -p $@
+
+$(OBJ)/$(TNSR_DIR)/%.o :: $(SRC)/%.c 
+	$(CC) $(CC_FLAGS) $(INCLUDE_DIRS) \
+	-c -o $@ $< 
+
+$(OBJ)/$(TNSR_DIR)/%.o :: $(SRC)/%.cpp 
+	$(CC) $(CPP_FLAGS) $(INCLUDE_DIRS) \
+	-c -o $@ $< 
+
+$(OBJ)$(SUFFIX)/$(TNSR_DIR)/%.o :: $(SRC)/%.c 
+	$(CC) $(CC_DEBUG_FLAGS) $(INCLUDE_DIRS) \
+	-c -o $@ $< 
+
+$(OBJ)$(SUFFIX)/$(TNSR_DIR)/%.o :: $(SRC)/%.cpp 
+	$(CC) $(CPP_DEBUG_FLAGS) $(INCLUDE_DIRS) \
+	-c -o $@ $< 
+
+$(PROGRAM): $(OBJ)/$(TNSR_DIR) $(FILES.o)
+	mkdir -p $(TNSR_DIR)
+	$(CC) $(CC_VERSION_FLAG) $(FILES.o) $(LDLIBS_COMMON) -o $(TNSR_DIR)/$@
+
+$(PROGRAM)$(SUFFIX): $(OBJ)$(SUFFIX)/$(TNSR_DIR) $(FILESD.o)
+	$(CC) $(CC_VERSION_FLAG) $(FILESD.o) $(LDLIBS_COMMON) -o $(TNSR_DIR)/$@
+

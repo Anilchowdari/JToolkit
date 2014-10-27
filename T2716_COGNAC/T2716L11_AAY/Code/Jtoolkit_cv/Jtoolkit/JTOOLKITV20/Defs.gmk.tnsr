@@ -1,0 +1,63 @@
+# Makefile variables used in lower-level makefiles
+
+##
+## Change the vproc for each release and maybe the API version number
+##
+VPROC = T2716V20_10FEB2006_AAE
+# Used in javadoc generated html documentation of the API
+API_VERSION = 2.0
+
+##
+## The location of java that will be used to build
+##
+JAVA_HOME = D:/j2sdk1.4.2
+
+##
+## Where OSS specific JNI include files can be found
+##
+# Should point to current directory's jni location
+#JNI_OSS_INCL = D:/Jtoolkit/jni_include
+
+##
+## The latest Pthreads directory, used to find include files
+##
+# Should point to current directory's pthreads location
+#PTHREADS_DIR = D:/Jtoolkit/PTHREADS
+
+##
+## Location of cross-compiler
+##
+COMP_ROOT = E:/TNSR
+LINK_ROOT = E:/TNSR
+
+##
+## Java tool locations
+##
+JAVADOC = $(JAVA_HOME)/bin/javadoc
+JAR = $(JAVA_HOME)/bin/jar
+JAVAC   = $(JAVA_HOME)/bin/javac
+JAVAH   = $(JAVA_HOME)/bin/javah
+
+#Object Directory for TNS/R platform
+TNSR_DIR=TNSR
+
+##
+## C and Linker tools
+##
+CC     = $(COMP_ROOT)/bin/c89
+# compiler flags that are the same for debug and non-debug builds
+CFLAGS_COMMON = -Wallow_cplusplus_comments -Wsrl -Wsystype=oss -Wextensions -D_VPROC=$(VPROC)
+# Flags used to build objects supporting IEEE floating point format
+CC_FLAGS_IEEE = -WIEEE_float
+CC_VERSION_FLAG = -Wversion2
+# for optimized builds
+CC_FLAGS = -Woptimize=2 -s -DNDEBUG $(CFLAGS_COMMON) -Wextensions
+# for debug builds
+CC_DEBUG_FLAGS= -Woptimize=0 -g $(CFLAGS_COMMON) -Wextensions
+LD     = $(LINK_ROOT)/bin/nld
+# Strip symbols for non-debug builds
+LD_FLAGS = -r -x -srl -L $(LINK_ROOT)/lib/ -losse -linet
+#Linkter flag to build objects supporting IEEE floating pointer format
+LD_FLAGS_IEEE = -set FLOATTYPE IEEE_FLOAT
+LD_DEBUG_FLAGS = -r -srl
+LDLIBS_COMMON = -lC -lc

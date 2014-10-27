@@ -1,0 +1,7 @@
+Name: "com/hp/nonstop/io/process"
+Specification-Title: "NonStop Java Extensions for Interprocess Communication"
+Specification-Version: "2.0"
+Specification-Vendor: "NonStop Java"
+Implementation-Title: "com.hp.nonstop.io.process"
+Implementation-Version: "T2716H10"
+Implementation-Vendor: "Hewlett-Packard Development Company, L.P."

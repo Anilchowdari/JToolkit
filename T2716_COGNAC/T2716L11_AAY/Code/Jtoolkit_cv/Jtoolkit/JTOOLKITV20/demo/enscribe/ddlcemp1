@@ -1,0 +1,18 @@
+?dict <dictloc>
+?Section CEMP1
+* Record CEMP1 created on 12/13/2001 at 11:32
+? C00CAlign
+Record CEMP1.
+  File is "CEMP1"                    Key-sequenced.
+?Talbound 1
+  02 EMPNUM                          Type Binary 16.
+  02 EMPNAME.
+    03 FIRSTNAME                     Pic "X(20)".
+    03 LASTNAME                      Pic "X(30)".
+    03 MIDDLE                        Pic "X".
+  02 REGNUM                          Type Binary 16.
+  02 BRANCHNUM                       Type Binary 16.
+
+  Key is EMPNUM Duplicates not allowed.
+  Key "rn" is REGNUM.
+  End

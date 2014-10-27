@@ -1,0 +1,7 @@
+Name: "NonStop Java Extensions"
+Specification-Title: "HP Joolkit for NonStop (TM) Servers"
+Specification-Version: "2.0"
+Specification-Vendor: "Hewlett-Packard Development Company, L.P."
+Implementation-Title: "HP JToolkit for NonStop (TM) Servers"
+Implementation-Version: "T2716L11_16FEB2015_L11"
+Implementation-Vendor: "Hewlett-Packard Development Company, L.P."

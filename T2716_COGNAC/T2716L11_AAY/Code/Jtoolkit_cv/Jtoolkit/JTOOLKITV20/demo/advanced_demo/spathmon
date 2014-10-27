@@ -1,0 +1,8 @@
+get $<vol>.<subvol>.spathmon !
+add
+volume $<vol>.<subvol>
+assign pathctl,$<vol>.<subvol>.pathctl
+pathmon/name $<pathmon_name>,cpu 0,nowait,out $<vol>.<subvol>.outlog/
+//
+exit
+

@@ -1,0 +1,78 @@
+# Makefile variables used in lower-level makefiles
+
+##
+## Change the vproc for each release and maybe the API version number
+##
+VPROC = T2716L11_16FEB2015_L11
+# Used in javadoc generated html documentation of the API
+API_VERSION = 2.0
+
+##
+## The location of java that will be used to build
+##
+JAVA_HOME = C:/JDK/sdk142
+
+##
+## Where OSS specific JNI include files can be found
+##
+JNI_OSS_INCL = C:/ST-VIEWS/T2716H11/Code/Jtoolkit_cv/Jtoolkit/jni_include
+
+
+##
+## The latest Pthreads directory, used to find include files
+##
+PTHREADS_DIR = C:/ST-VIEWS/T2716H11/Code/Jtoolkit_cv/Jtoolkit/PTHREADS
+
+##
+## Location of cross-compiler
+##
+WORKDIR=c:/ST-VIEWS/T2716H11/Code/Jtoolkit_cv/Jtoolkit/JTOOLKITV20
+COMP_ROOT = C:/BFSToolkits/tndm_cmplrs-x01_Nov22
+LINK_ROOT = C:/BFSToolkits/tndm_cmplrs-x01_Nov22
+
+##
+## Java tool locations
+##
+JAVADOC = $(JAVA_HOME)/bin/javadoc
+JAR = $(JAVA_HOME)/bin/jar
+JAVAC   = $(JAVA_HOME)/bin/javac
+JAVAH   = $(JAVA_HOME)/bin/javah
+
+#Object Directory for TNS/E platform
+TNSE_DIR=TNSE
+ 
+##
+## C and Linker tools
+##
+CC     = $(COMP_ROOT)/usr/bin/c89
+# compiler flags that are the same for debug and non-debug builds
+CFLAGS_COMMON = -Wallow_cplusplus_comments -Wtarget=tns/x -Wsystype=oss -Wextensions -D_PUT_MODEL_ -D_VPROC=$(VPROC)
+# Flags used to build objects supporting IEEE floating point format
+CC_FLAGS_IEEE = -Wversion3 -WIEEE_float
+# for optimized builds
+CC_FLAGS = -Woptimize=2 -s -DNDEBUG $(CFLAGS_COMMON) -Wextensions
+# for debug builds
+CC_DEBUG_FLAGS= -Woptimize=0 -g $(CFLAGS_COMMON) -Wextensions
+LD     = $(LINK_ROOT)/usr/bin/xld -set systype oss
+# Strip symbols for non-debug builds
+LD_FLAGS = -x -L $(COMP_ROOT)/usr/lib -linet
+#Linkter flag to build objects supporting IEEE floating pointer format
+LD_FLAGS_IEEE = -set FLOATTYPE IEEE_FLOAT
+LD_DEBUG_FLAGS = -r 
+LDLIBS_COMMON = -L $(COMP_ROOT)/usr/lib -llibcrtlx.so -llibcpp3x.so -llibcrex.so -llibcppcx.so -llibputx.so -llibrldx.so -llibosskx.so
+LD_SHARED = -shared $(LDLIBS_COMMON) -export_all 
+
+ifeq ($(ARCH_DATA_MODEL), 64)
+U64_FLAGS = -Wlp64
+CFLAGS_COMMON += -D_LP64=1
+LDLIBS_COMMON = -L $(COMP_ROOT)/usr/lib -llibcrtlw.so -llibcpp3w.so -llibcrew.so -llibcppcw.so -llibputw.so -lrld -llibosskw.so
+LD64= -set data_model lp64 
+endif
+
+ifeq ($(ARCH_DATA_MODEL), 100)
+CFLAGS_COMMON = -Wallow_cplusplus_comments -Wtarget=tns/x -Wsystype=oss -Wextensions -D_VPROC=$(VPROC)
+LDLIBS_COMMON = -L $(COMP_ROOT)/usr/lib -llibcrtlx.so -llibcpp3x.so -llibcrex.so -llibcppcx.so -llibsptx.so -lrld -llibosskx.so
+endif
+
+
+

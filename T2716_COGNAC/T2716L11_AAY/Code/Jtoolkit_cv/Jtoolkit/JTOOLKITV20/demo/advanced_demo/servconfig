@@ -1,0 +1,84 @@
+RESET SERVER
+SET SERVER PROCESSTYPE OSS
+SET SERVER AUTORESTART 3
+SET SERVER CREATEDELAY 10 SECS
+SET SERVER HIGHPIN ON
+SET SERVER NUMSTATIC 1
+SET SERVER MAXSERVERS 2
+SET SERVER LINKDEPTH 16
+SET SERVER MAXLINKS 16
+SET SERVER TMF ON
+SET SERVER PRI 170
+SET SERVER SECURITY "N"
+
+[DO NOT CHANGE THE FOLLOWING COMMAND]
+[The arglist values below identify:]
+[  a command to java that causes it to abend instead of exit if an  ]
+[    exception is thrown but not caught.  When this command is      ]
+[    present, TS/MP will restart the server after it abends.        ]
+[  the name of the .class (RServer) containing the main method      ]
+[  the number of outstanding reads allowed on $RECEIVE before a     ]
+[  reply is required.  You can change this value.                   ] 
+
+SET SERVER ARGLIST -Xabend,RServer,4
+
+[****** CHANGE THE CLASSPATH ********                               ]
+[Change this command to replace <yourdir> with the absolute path to ]
+[the oss directory where you installed this demo; For example: if   ]
+[you installed the demo in /root/demo1, the following line should   ]
+[look like this:                                                    ]
+[SET SERVER ENV CLASSPATH=/root/demo1:/root/demo1/test_pkg:         ]
+[You must add <jtkloc>/lib/tdmext.jar to the CLASSPATH where        ]
+[<jtkloc> is sub directory in which jtoolkit was dearchived.        ]
+
+SET SERVER ENV CLASSPATH=/<yourdir>:/<yourdir>/test_pkg:
+
+[******* POSSIBLE CHANGE **************                             ]
+[You might have to change JREHOME if your version of java is not    ]
+[installed in the default location                                  ]
+
+SET SERVER ENV JREHOME=/usr/tandem/java/jre
+[Change this command to replace <lib_path> with the absolute path to ]
+[the oss directory where you placed libtdmext.so]
+SET SERVER ENV _RLD_LIB_PATH=<lib_path>
+
+[********* CHANGE STDOUT and STDERR *********                                  ]
+[Change <yourdir> to the directory where you installed this demo.   ]
+[The Server writes status and error messages to these files.        ]
+[For example, if you installed the demo in /root/demo1, the         ]
+[lines should look like this:                                       ]
+[SET SERVER STDOUT /root/demo1/routlog                              ]
+[SET SERVER STDERR /root/demo1/rerrlog                              ]
+
+SET SERVER STDOUT /<yourdir>/routlog
+SET SERVER STDERR /<yourdir>/rerrlog
+
+[************** CHANGE SERVER VOLUME *********                      ]
+[Change <vol>.<subvol> to the Guardian volume and subvolume you     ]
+[specified in step 8 when you edited recfup.  For example, if you   ]
+[created the data base files on $data.test, the following line      ]
+[should look like:                                                  ]
+[SET SERVER VOLUME $data.test                                       ]
+
+SET SERVER VOLUME $<vol>.<subvol>\
+
+[************* CHANGE THE COMMAND DIRECTORY (CWD) *****             ]
+[Change <yourdir> to the directory where you installed this demo.   ]
+[If you installed this demo, in /root/demo1, the following line     ]
+[should look like:                                                  ]
+[SET SERVER CWD /root/demo1                                         ]
+
+SET SERVER CWD /<yourdir>
+
+[*************** Possible Change ******************                 ]
+[You might have to change the SERVER PROGRAM if your version of     ]
+[java is not installed in the default location.  If you do change   ]
+[this value, be sure to specify the java binary which resides in    ]
+[<your_java_install_dir>/bin/java                                   ]
+
+SET SERVER PROGRAM /usr/tandem/java/bin/java
+ADD SERVER mysvc
+
+[Start the serverclass containing the java server                  ]
+
+START server mysvc

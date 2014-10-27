@@ -1,0 +1,36 @@
+#! /bin/ksh
+#
+#     @(#)sipconf_wrapper.sh    1.33 97/10/16
+#
+#===================================================================
+# THIS SCRIPT AND JAVA WILL NOT RUN UNDER SUNOS4.X, AKA SOLARIS 1.X.
+#===================================================================
+
+# Set up default variable values if not supplied by the user.
+PRG=`whence $0"obj"`
+BASEHOME=`dirname "$PRG"`
+
+
+FOUND_LOG=false
+for arg in $@
+do
+   if [ "$arg" = "-e" ]; then
+        FOUND_LOG=true
+   fi
+done
+export FOUND_LOG
+progname=`basename $0"obj"`
+
+prog=$BASEHOME/${progname}
+if [ ${FOUND_LOG} = "false" ]; then
+   NEW_OPT="-e /tmp/errlog"
+fi
+
+if [ -x "$prog" ]
+then
+    eval $DEBUG_PROG $prog $opts '"$@"' $NEW_OPT &
+else
+    echo >&2 "$progname was not found in ${prog}"
+    exit 1
+fi
+

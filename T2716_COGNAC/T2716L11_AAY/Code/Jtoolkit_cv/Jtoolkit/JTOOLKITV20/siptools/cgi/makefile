@@ -1,0 +1,112 @@
+# ---------------- You should not have to change anything below this line ---
+#COMP_ROOT=E:/TNSE
+#COMP_ROOT_G=/G
+include ../../Defs.gmk.tnse
+TOOLSPATH=${COMP_ROOT}/usr/bin
+AR=${COMP_ROOT}/usr/bin/ar
+ELD=${COMP_ROOT}/usr/bin/xld
+# NLD=${TOOLSPATH}/nld
+STRIP=${TOOLSPATH}/strip
+# SQLCFE=${COMP_ROOT}/lib/sqlcfe
+SQLCFE=${COMP_ROOT}/usr/lib/sqlcfe
+#SQLCOMP=/G/system/system/sqlcomp 
+# SQLCOMP=${COMP_ROOT_G}/sqlcomp 
+CC=COMP_ROOT=${COMP_ROOT} SQLCFE=${SQLCFE} ${TOOLSPATH}/c89 -Wv
+
+C89OPTLEVEL=0
+SYMBOLS=-g
+FTEST=-D_TANDEM_SOURCE -D_XOPEN_SOURCE
+WARN=-Wnowarn=770,262
+CFLAGSGUARD=${SYMBOLS} -Wsystype=guardian -Wnostdinc \
+-I${COMP_ROOT}/usr/include -Wansistreams -Wnolink -Wnosuppress \
+-Wextensions -Woptimize=${C89OPTLEVEL} ${FTEST} ${WARN}
+
+CFLAGS=${CFLAGSGUARD} -Werrors=10 -Wtarget=tns/x
+#----------------------------------------------------------------------------#
+
+OBJS=vproc.o preque.o init.o send.o util.o \
+     www.o cgi.o cgilib.o \
+     mod.o standa.o rfc931.o chkaut.o \
+     unig.o unisp.o swn.o initia.o termin.o abort.o
+
+FILES=mod.c cgilib.c rfc931.c send.c standa.c cgi.c chkaut.c init.c util.c www.c swn.c initia.c termin.c unig.c unisp.c vproc.c preque.c abort.c
+
+ALL=OPT/libcgi.a 
+
+#----------------------------------------------------------------------------#
+
+.SUFFIXES: .c .o
+
+comp:
+	${CC} ${CFLAGS} ${FILES} 
+	echo $(.SOURCE) $(.TARGET)
+	${AR} -cr libcgi.a ${OBJS}
+	chmod 777 libcgi.a
+	cp libcgi.a ../lib/TNSE/
+	# rm *.o
+	rm -f *.L
+
+forceall:
+	touch *.[ch]
+	make
+
+install:
+	touch *.[ch]
+	make  C89OPTLEVEL=0 SYMBOLS=-s
+	make  installit
+
+installit:
+	cp cgilib.h ../demo
+	cp libcgi.a ../demo
+
+clean:
+	rm -f *.o libcgi.a
+	rm -f ../lib/TNSE/libcgi.a
+
+#----------------------------------------------------------------------------#
+
+
+#---------------------------------------------------------------------------#
+
+depend:
+	grep '^#[       ]*include[      ]*"' *.[c] | \
+	sed -e 's/:[^"]*"\([^"]*\)"/:   \1/' -e 's/\.c/.o/' | \
+	awk ' { if ($$1 != prev) { print rec; rec = $$0; prev = $$1; } \
+	        else { if (length(rec $$2) > 78) { print rec; rec = $$0; } \
+	               else rec = rec " " $$2 } } \
+	      END { print rec } ' > makedep
+	echo '/^# DO NOT DELETE THIS LINE/+2,$$d' >eddep
+	echo '$$r makedep' >>eddep
+	echo 'w' >>eddep
+	cp makefile makefile.bak
+	ed - makefile < eddep
+	rm eddep makedep
+	echo '' >> makefile
+	echo '# DEPENDENCIES MUST END AT END OF FILE' >> makefile
+	echo '# IF YOU PUT STUFF HERE IT WILL GO AWAY' >> makefile
+	echo '# see make depend above' >> makefile
+	tail -n 20 makefile 
+
+# DO NOT DELETE THIS LINE -- make depend uses it
+
+
+cgi.o:   config.h wn.h version.h cgi.h cgilib.h
+cgilib.o:   wn.h version.h cgi.h cgilib.h
+chkaut.o:   config.h wn.h auth.h
+exform.o:   cgilib.h
+init.o:   config.h wn.h version.h err.h content.h cgilib.h
+mod.o:   config.h wn.h
+preque.o:   config.h uniguard.h wn.h
+rfc931.o:   config.h wn.h
+send.o:   config.h cgilib.h wn.h version.h
+standa.o:   config.h unispawn.h cgilib.h uniguard.h wn.h
+standa1.o:   config.h unispawn.h cgilib.h uniguard.h wn.h
+swn.o:   config.h uniguard.h wn.h version.h cgi.h
+unig.o:   uniguard.h
+unisp.o:   wn.h unispawn.h
+util.o:   config.h wn.h
+www.o:   config.h wn.h
+
+# DEPENDENCIES MUST END AT END OF FILE
+# IF YOU PUT STUFF HERE IT WILL GO AWAY
+# see make depend above

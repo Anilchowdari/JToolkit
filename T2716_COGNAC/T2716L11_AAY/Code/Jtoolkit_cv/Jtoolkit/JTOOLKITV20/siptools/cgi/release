@@ -1,0 +1,94 @@
+! RELEASE FILE FOR NSK HTTP LIBRARY - CREATED ON 04 AUGUST 2000
+
+BUILD                          !  Build file for product
+MAKEFILE                       !  Product makefile.
+RELEASE                        !  Release control file.
+SOFTDOC (RISC) ISV(SOFTDOC(DOCPRINT)) !  Software Release Document.
+
+LIBCGIA (RISC) ISV(ZLIBHTTP(USER))      !  NSK HTTP Library file
+EXFORMC (RISC) ISV(ZLIBHTTP(USER))      !  Sample CGI application
+CGILIBH (RISC) ISV(ZLIBHTTP(USER))      !  CGI library header file
+README  (RISC) ISV(ZLIBHTTP(USER))      !  Readme file
+
+COMMONH                     !  Common header file
+CONFIGH                     !  Configuration header file
+CONTENTH                    !  Content types header file
+ERRH                        !  Error messages header file
+WNH                         !  Global header file
+VERSIONH                    !  version.h header file
+
+SWNC                        !  Main startup-routine
+SWNO                        !  Binary of swn.c
+SWNL                        !  Listing of swn.c
+
+INITC                       !  Initialisation routine
+INITO                       !  Binary of init.c
+INITL                       !  Listing of init.c
+
+STANDAC                     !  Configration routine
+STANDAO                     !  Binary of standa.c
+STANDAL                     !  Listing of standa.c
+
+CGIC                        !  CGI environment setting
+CGIO                        !  Binary for cgi.c
+CGIL                        !  Listing of cgi.c
+CGIH                        !  CGI data header file
+
+CGILIBC                     !  CGI library functions
+CGILIBO                     !  Binary of cgilib.c
+CGILIBL                     !  Listing of cgilib.c
+
+INITIAC                     !  CGI initialisation module
+INITIAO                     !  Binary of initia.c
+INITIAL                     !  Listing of initia.c
+
+CHKAUTC                     !  Authorisation module
+CHKAUTO                     !  Binary of chkaut.c
+CHKAUTL                     !  Listing of chkaut.c
+AUTHH                       !  auth.h header file
+
+MODC                        !  Date conversion file
+MODO                        !  Binary of mod.c
+MODL                        !  Listing of mod.c
+
+SENDC                       !  Send data to client
+SENDO                       !  Binary of send.c
+SENDL                       !  Listing of send.c
+
+UNIGC                       !  Guardian related functions
+UNIGO                       !  Binary of unig.c
+UNIGL                       !  Listing of unig.c
+UNIGUARD                    !  uniguard.h header file
+
+UNISPC                      !  Process creation
+UNISPO                      !  Binary of unisp.c
+UNISPL                      !  Listing of unisp.c
+UNISPAWN                    !  unispawn.h header file
+
+UTILC                       !  String utility functions
+UTILO                       !  Binary of util.c
+UTILL                       !  Listing of util.c
+
+VPROCC                      !  VPROC information file
+VPROCO                      !  Binary of vproc.c
+VPROCL                      !  Listing of vproc.c
+
+WWWC                        !  Removal of characters from URL
+WWWO                        !  Binary of www.c
+WWWL                        !  Listing of www.c
+
+PREQUEC                     !  Parsing requests
+PREQUEO                     !  Binary of preque.c
+PREQUEL                     !  Listing of preque.c
+
+TERMINC                     !  CGI termination function
+TERMINO                     !  Binary of termin.c
+TERMINL                     !  Listing of termin.c
+
+ABORTC                      !  Connection abort function
+ABORTO                      !  Binary of abort.c
+ABORTL                      !  Listing of abort.c
+
+RFC931C                     !  RFC931 Timeout function
+RFC931O                     !  Binary of rfc931.c
+RFC931L                     !  Listing of rfc931.c

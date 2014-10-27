@@ -1,0 +1,5 @@
+gtacl -p fup purge \$data11.newbc.bc22o !
+gtacl -p edit </h/sip/newtest/sip.obey.bc22
+gtacl -c 'obey $data11.newbc.bc22o'
+gtacl -p pathcom \$bc22 < /h/sip/newtest/sipappl_bc22_conf
+gtacl -p pathcom \$bc22 < sipappl_bc22_sipsvc1_conf

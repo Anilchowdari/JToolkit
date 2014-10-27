@@ -1,0 +1,47 @@
+The following lists some possible problems that you might have with SIP 
+or the sip configuration tool and also suggests solutions.
+
+THE CLIENT HANGS ON ITS FIRST CONNECTION WITH SIP
+
+1. Check that you have configured the right port number.
+
+   a. If your SIP server requires a port number(s) as an argument when 
+      run outside of SIP, use the Management Tool to verify that you 
+      have included the port number(s) in the arglist data entry for 
+      the SIP server. To use the Management Tool, enter your
+      configuration directory and click on Management Tool.  When the 
+      table appears listing all the applications configured in your 
+      configuration directory, click on the SIP serverclass to which 
+      the client is trying to connect.
+
+2. Use the SIP Management Tool or Pathcom to verify that your SIP server 
+   is running. The server may fail to run because java can't find the 
+   .class file, the class path is specified incorrectly, or ...  If an 
+   error occurs with your SIP server, information is written to a file 
+   in the directory you specified for your logpath.  This file has
+   the format:
+
+		<pathmonName><serverclassName>.errlog
+
+	Examine this file for error messages and correct any error found.
+
+3. Verify that the ptcp/ip process or tcp/ipv6 process you specified when 
+   configuring the SIP server actually exists.
+
+A CLIENT HANGS ON A SUBSEQUENT CONNECTION WITH SIP
+
+1. Verify that your SIP server closes the socket with which it communicates 
+   with the client. 
+
+2. If a client connects and disconnects from the same SIP server, verify 
+   that the client closes sockets after each disconnection.
+
+
+WHILE RECONFIGURING/STOPPING/STARTING A SERVERCLASS,
+SIPCONF RETURNS THE MESSAGE: OBJECT IS IN THE WRONG STATE
+
+Use pathcom to manually freeze/stop the distributor associated with the SIP
+server; then use pathcom to manually freeze/stop the SIP Server. This can 
+happen when the SIP server starts and then stops because Java encounters an 
+error. Check the errlog associated with the SIP server for any errors.
+

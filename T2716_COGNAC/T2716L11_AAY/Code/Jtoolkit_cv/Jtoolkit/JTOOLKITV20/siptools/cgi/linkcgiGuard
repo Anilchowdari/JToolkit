@@ -1,0 +1,1 @@
+nld -o libcgia -r -set systype guardian  -l zinetsrl -l zstfnsrl -obey /usr/lib/libc.obey vproc.o preque.o init.o send.o util.o www.o cgi.o cgilib.o mod.o standa.o rfc931.o chkaut.o unig.o unisp.o swn.o initia.o termin.o
