@@ -1,7 +1,0 @@
-get $data11.newbc.bc22o!
-a
-volume $data11.newbc
-assign pathctl,bc22ctl
-pathmon/name $bc22, cpu 2, out $NULL, nowait/
-//
-exit

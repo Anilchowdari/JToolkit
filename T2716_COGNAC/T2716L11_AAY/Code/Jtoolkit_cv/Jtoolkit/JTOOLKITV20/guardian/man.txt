@@ -1,7 +1,0 @@
-Name: "com/tandem/ext/enscribe"
-Specification-Title: "NonStop Java Extensions"
-Specification-Version: "2.0"
-Specification-Vendor: "NonStop Java"
-Implementation-Title: "Pathway Server API"
-Implementation-Version: "T2716L11_AAY"
-Implementation-Vendor: "Hewlett-Packard Development Company, L.P."

@@ -1,4 +1,0 @@
-def employee-add,OUTPUT,c,nn
-def employee-request,OUTPUT,c,nn
-def employee-reply,INPUT,c,nn
-def error-reply,INPUT,c,nn
